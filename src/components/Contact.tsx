@@ -105,8 +105,8 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-800">Email</h4>
-                    <a href="mailto:info@safdiweb.com" className="text-blue-600 hover:underline">
-                      info@safdiweb.com
+                    <a href="mailto:info@safdiweb.com" className="text-blue-600 hover:underline">          
+                      safdischool@gmail.com
                     </a>
                   </div>
                 </div>
@@ -117,8 +117,8 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-gray-800">Phone</h4>
-                    <a href="tel:+2126XXXXXXXX" className="text-blue-600 hover:underline">
-                      +212 6XX XXX XXX
+                    <a href="tel:+212661-423919" className="text-blue-600 hover:underline">
+                      +212 661-423919
                     </a>
                   </div>
                 </div>
@@ -130,7 +130,7 @@ const Contact: React.FC = () => {
                   <div>
                     <h4 className="font-medium text-gray-800">Address</h4>
                     <p className="text-gray-600">
-                      123 Digital Avenue, Tech District, El-JADIDA, Morocco
+                      19 HAY ESSALLAM 24000, Tech District, El-JADIDA, Morocco
                     </p>
                   </div>
                 </div>
