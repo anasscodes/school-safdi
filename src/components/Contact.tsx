@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Mail, Phone, MapPin, Clock } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 const Contact: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -13,6 +14,7 @@ const Contact: React.FC = () => {
   
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState(false);
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,21 +41,37 @@ const Contact: React.FC = () => {
   };
   
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  emailjs
+    .sendForm(
+      'service_mzlhn37',       // ← من EmailJS
+      'template_if6co1f',      // ← من EmailJS
+      formRef.current!,        // ← الفورم كامل
+      'OhsncIpq9V4hhrDk-'        // ← من EmailJS
+    )
+    .then(
+      (result) => {
+        console.log(result.text);
+        setIsSubmitting(false);
+        setSubmitted(true);
+        setFormState({ name: '', email: '', message: '' });
+
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 5000);
+      },
+      (error) => {
+      console.log(error.text);
       setIsSubmitting(false);
-      setSubmitted(true);
-      setFormState({ name: '', email: '', message: '' });
-      
-      // Reset submission state after showing success message
+      setError(true); // ← غادي يفعّل عرض رسالة الخطأ
       setTimeout(() => {
-        setSubmitted(false);
+        setError(false);
       }, 5000);
-    }, 1500);
-  };
+    }
+    );
+};
 
   return (
     <section 
@@ -112,7 +130,7 @@ const Contact: React.FC = () => {
                   <div>
                     <h4 className="font-medium text-gray-800">Address</h4>
                     <p className="text-gray-600">
-                      123 Digital Avenue, Tech District, Casablanca, Morocco
+                      123 Digital Avenue, Tech District, El-JADIDA, Morocco
                     </p>
                   </div>
                 </div>
@@ -146,6 +164,13 @@ const Contact: React.FC = () => {
                 <p>We'll get back to you as soon as possible.</p>
               </div>
             ) : (
+              <>
+              {error && (
+      <div className="bg-red-50 text-red-800 p-4 rounded-lg">
+        <p className="font-medium">Oops! Something went wrong.</p>
+        <p>Please try again later.</p>
+      </div>
+    )}
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
@@ -202,6 +227,7 @@ const Contact: React.FC = () => {
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
+              </>
             )}
           </div>
         </div>
